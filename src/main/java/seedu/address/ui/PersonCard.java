@@ -42,6 +42,9 @@ public class PersonCard extends UiPart<Region> {
 
     @FXML
     private Label type;
+
+    @FXML
+    private FlowPane tutorials;
     @FXML
     private FlowPane tags;
 
@@ -58,6 +61,9 @@ public class PersonCard extends UiPart<Region> {
         email.setText(person.getEmail().value);
         type.setText(person.getType().toString());
         type.getStyleClass().setAll(person.getType() == PersonType.TA ? "type-ta" : "type-stu");
+        person.getTutorials().stream()
+                .sorted(Comparator.comparing(tutorial -> tutorial.value))
+                .forEach(tutorial -> tutorials.getChildren().add(new Label(tutorial.value)));
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
