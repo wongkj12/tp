@@ -17,6 +17,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonType;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Tutorial;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -32,6 +33,8 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
+    private final List<String> tutorials = new ArrayList<>();
+
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -42,13 +45,16 @@ class JsonAdaptedPerson {
                              @JsonProperty("id") String id,
                              @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+            @JsonProperty("tutorials") List<String> tutorials, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.type = type;
         this.name = name;
         this.id = id;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        if (tutorials != null) {
+            this.tutorials.addAll(tutorials);
+        }
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -64,6 +70,9 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        tutorials.addAll(source.getTutorials().stream()
+                .map(tutorial -> tutorial.value)
+                .collect(Collectors.toList()));
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -128,8 +137,17 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
+        for (String tutorial : tutorials) {
+            if (!Tutorial.isValidTutorial(tutorial)) {
+                throw new IllegalValueException(Tutorial.MESSAGE_CONSTRAINTS);
+            }
+        }
+        final Set<Tutorial> modelTutorials = new HashSet<>();
+        modelTutorials.addAll(tutorials.stream()
+                .map(tutorial -> new Tutorial(tutorial))
+                .collect(Collectors.toSet()));
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(personType, modelName, modelId, modelPhone, modelEmail, modelAddress, modelTags);
+        return new Person(personType, modelName, modelId, modelPhone, modelEmail, modelAddress, modelTutorials, modelTags);
     }
 
 }

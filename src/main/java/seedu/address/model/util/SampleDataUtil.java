@@ -13,6 +13,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonType;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Tutorial;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -23,22 +24,22 @@ public class SampleDataUtil {
         return new Person[] {
             new Person(PersonType.STU, new Name("Alex Yeoh"), new Id("A0777777L"), new Phone("87438807"),
                     new Email("alexyeoh@example" + ".com"), new Address("Blk 30 Geylang Street 29, #06-40"),
-                    getTagSet("friends")),
+                    getTutorialSet("Thu11-4"), getTagSet("friends")),
             new Person(PersonType.STU, new Name("Bernice Yu"), new Id("A9128392K"), new Phone("99272758"),
                     new Email("berniceyu@example.com"), new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
-                    getTagSet("colleagues", "friends")),
+                    getTutorialSet("Mon12-3"), getTagSet("colleagues", "friends")),
             new Person(PersonType.STU, new Name("Charlotte Oliveiro"), new Id("A2222222P"), new Phone("93210283"),
                     new Email("charlotte@example.com"), new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
-                    getTagSet("neighbours")),
+                    getTutorialSet("Tue11-4"), getTagSet("neighbours")),
             new Person(PersonType.STU, new Name("David Li"), new Id("A9128392Z"), new Phone("91031282"),
                     new Email("lidavid@example.com"), new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
-                    getTagSet("family")),
+                    getTutorialSet("Fri15-1"), getTagSet("family")),
             new Person(PersonType.STU, new Name("Irfan Ibrahim"), new Id("B0198266Z"), new Phone("92492021"),
                     new Email("irfan@example.com"), new Address("Blk 47 Tampines Street 20, #17-35"),
-                    getTagSet("classmates")),
+                    getTutorialSet("Wed08-2"), getTagSet("classmates")),
             new Person(PersonType.STU, new Name("Roy Balakrishnan"), new Id("B0000666C"), new Phone("92624417"),
                     new Email("royb@example.com"), new Address("Blk 45 Aljunied Street 85, #11-31"),
-                    getTagSet("colleagues"))
+                    getTutorialSet("Thu11-1"), getTagSet("colleagues"))
         };
     }
 
@@ -48,6 +49,15 @@ public class SampleDataUtil {
             sampleAb.addPerson(samplePerson);
         }
         return sampleAb;
+    }
+
+    /**
+     * Returns a tutorial set containing the list of strings given.
+     */
+    public static Set<Tutorial> getTutorialSet(String... strings) {
+        return Arrays.stream(strings)
+                .map(Tutorial::new)
+                .collect(Collectors.toSet());
     }
 
     /**
