@@ -517,8 +517,6 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
-
 ### Deleting a person
 
 1. Deleting a person while all persons are being shown
@@ -534,12 +532,22 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+### Tutorial Tags
 
-### Saving data
+1. Adding a Tutorial Tag to be used
+    1. Prerequisites: `TUE08` is not already a Tutorial tag.
+    2. Test case: `tuttag add /t TUE08` <br> Expected: `TUE08` is added as a valid Tutorial tag.
+2. Deleting a Tutorial Tag
+   1. Prerequisites: `TUE08` is already a Tutorial tag.
+   2. Test case: `tuttag del /t TUE08` <br> Expected: `TUE08` is deleted from the valid Tutorial tag list, and removes the `TUE08` Tutorial tag from all persons.
 
-1. Dealing with missing/corrupted data files
+### Mark command
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+1. Marking an Assignment tag
+   1. Prerequisites: At least 1 person in the list.
+   2. Test case: `mark 1 /t Assignment1 /ts cg` <br> Expected: Updates the `Assignment1` tag to `COMPLETE_GOOD` for the 1st person in the displayed list.
+   3. Test case: `mark all /t Assignment1 /ts cb` <br> Expected: Updates the `Assignment1` tag to `COMPLETE_BAD` for all persons in the displayed list.
 
-1. _{ more test cases …​ }_
+2. Marking an Attendance tag
+   1. Prerequisites: At least 1 person in the list.
+   2. Test case: `mark 1 /t week1 /ts awr` <br> Expected: Updates the `week1` tag for the 1st person in the displayed list to `ABSENT_WITH_REASON`.
